@@ -100,18 +100,19 @@ generative-ai-seminar/
 
 | Week | Topic                                  | Folder Link          | Highlights                                               |
 | ---- | -------------------------------------- | -------------------- | -------------------------------------------------------- |
-| 1    | Course Launch & The Generative AI Wave | [Week-01](./week-01) | State of GenAI, research & industry trends               |
-| 2    | Foundations of AI, ML & Deep Learning  | [Week-02](./week-02) | Core definitions, neural networks, cognition comparisons |
-| 3    | Sequence Models & Transformers         | [Week-03](./week-03) | RNNs, LSTMs, GRUs, attention, Transformer intro          |
-| 4    | GPT Architectures (GPT-1 → GPT-5)      | [Week-04](./week-04) | Model evolution, fine-tuning, RLHF                       |
-| 5    | Advanced Open Models                   | [Week-05](./week-05) | DeepSeek-V2, LLaMA, Phi, Claude, Mistral                 |
-| 6    | Agentic AI Systems                     | [Week-06](./week-06) | Agents, orchestration, tool-augmented LLMs               |
-| 7    | Multimodal AI                          | [Week-07](./week-07) | GPT-4V, MM-ReAct, Gemma 3, multimodal tasks              |
-| 8    | Fine-Tuning & Domain Adaptation        | [Week-08](./week-08) | LoRA, adapters, custom datasets                          |
-| 9    | Hackathon – Part 1                     | [Week-09](./week-09) | Collaborative projects, real-world challenges            |
-| 10   | Hackathon – Part 2                     | [Week-10](./week-10) | Solution building & deployment                           |
-| 11   | Responsible & Ethical AI               | [Week-11](./week-11) | Bias, safety, ethics, governance                         |
-| 12   | Capstone & Showcase                    | [Week-12](./week-12) | Final presentations, wrap-up                             |
+| 1    | Course Launch & The Generative AI Wave | [week-01](./week-01) | State of GenAI, research & industry trends               |
+| 2    | Foundations of AI, ML & Deep Learning  | [week-02](./week-02) | Core definitions, neural networks, cognition comparisons |
+| 3    | Sequence Models & Transformers         | [week-03](./week-03) | RNNs, LSTMs, GRUs, attention, Transformer intro          |
+| 4    | GPT Architectures (GPT-1 → GPT-5)      | [week-04](./week-04) | Model evolution, fine-tuning, RLHF                       |
+| 5    | Advanced Open Models                   | [week-05](./week-05) | DeepSeek-V2, LLaMA, Phi, Claude, Mistral                 |
+| 6    | Agentic AI Systems                     | [week-06](./week-06) | Agents, orchestration, tool-augmented LLMs               |
+| 7    | Multimodal AI                          | [week-07](./week-07) | GPT-4V, MM-ReAct, Gemma 3, multimodal tasks              |
+| 8    | Fine-Tuning & Domain Adaptation        | [week-08](./week-08) | LoRA, adapters, custom datasets                          |
+| 9    | Hackathon – Part 1                     | [week-09](./week-09) | Collaborative projects, real-world challenges            |
+| 10   | Hackathon – Part 2                     | [week-10](./week-10) | Solution building & deployment                           |
+| 11   | Responsible & Ethical AI               | [week-11](./week-11) | Bias, safety, ethics, governance                         |
+| 12   | Capstone & Showcase                    | [week-12](./week-12) | Final presentations, wrap-up                             |
+
 
 ---
 
