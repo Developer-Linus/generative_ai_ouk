@@ -1,21 +1,148 @@
-# Assignment One - Waste Management AI Agent
-> *“We do not inherit the Earth from our ancestors, we borrow it from our children.”* — Native Proverb
-I'm standing in the middle of nowhere, with waste scattered in every direction. People pass by, lost in their daily routines, without even noticing the piles around them. At the dump sites, dogs and crows fight desperately for scraps — a harsh reminder of survival in the filth. The air is heavy with a stench that chokes the lungs, and flies swarm endlessly.<br>
-It makes me pause and ask: *what if Mother Earth herself is angry with us?* How long can she endure the scars we inflict on her? Even the grasses, buried beneath heaps of garbage, seem stressed and suffocated by our actions.<br>
+# Generative AI with Jac Programming – 12 Week Seminar
 
-But I believe we can change this. We have the ability — and the responsibility — to create a cleaner, more serene environment where fresh air flows freely and the earth feels alive again. <br>
+Welcome to the official repository for the **12-week seminar on Generative AI and Jac Programming**, jointly offered by **The Open University of Kenya (OUK)** and **BCS Technology International Pty Limited, Australia**.
 
-That is why I built the [waste-management-ai-agent](waste_management_agent/waste_management.jac)
-. With just the type of waste a user provides, the agent responds with:
+This program blends **cutting-edge AI theory** with **hands-on practice**, equipping learners with skills to design, build, and deploy **generative AI applications** across text, images, music, and video. The course is delivered by **AI PhDs and industry experts**, with a balance of **weekly tutorials, coding projects, and a final hackathon**.
 
-- the waste name,
+## 📂 Repository Structure
 
-- its level of harmfulness,
+generative-ai-seminar/
+│
+├── README.md                  # Main homepage (course overview + navigation)
+├── LICENSE                    # License file (recommended)
+├── CONTRIBUTING.md             # How others can contribute
+├── pyproject.toml              # uv project configuration + dependencies
+├── uv.lock                     # Auto-generated lock file
+│
+├── resources/                  # Shared resources across all weeks
+│   ├── seminar-slides/         # Lecture slides (if shareable)
+│   ├── datasets/               # Sample datasets for practice
+│   ├── cheatsheets/            # Quick references (e.g., GPT vs LLaMA)
+│   └── readings.md             # Suggested readings / papers
+│
+├── week-01/                    # Week 1: Course Launch & GenAI Wave
+│   ├── README.md               # Outline, tasks, tutorial notes
+│   ├── src/                    # Example scripts/code
+│   └── assets/                 # Diagrams, media, supporting files
+│
+├── week-02/                    # Week 2: Foundations of AI, ML & DL
+│   ├── README.md
+│   ├── src/
+│   └── assets/
+│
+├── week-03/                    # Week 3: Sequence Models & Transformers
+│   ├── README.md
+│   ├── src/
+│   └── assets/
+│
+├── week-04/                    # Week 4: GPT Architectures
+│   ├── README.md
+│   ├── src/
+│   └── assets/
+│
+├── week-05/                    # Week 5: Advanced Models
+│   ├── README.md
+│   ├── src/
+│   └── assets/
+│
+├── week-06/                    # Week 6: Agentic AI
+│   ├── README.md
+│   ├── src/
+│   └── assets/
+│
+├── week-07/                    # Week 7: Multimodal Systems
+│   ├── README.md
+│   ├── src/
+│   └── assets/
+│
+├── week-08/                    # Week 8: Fine-Tuning & Domain Adaptation
+│   ├── README.md
+│   ├── src/
+│   └── assets/
+│
+├── week-09/                    # Hackathon Week 1
+│   ├── README.md
+│   ├── src/
+│   └── assets/
+│
+├── week-10/                    # Hackathon Week 2
+│   ├── README.md
+│   ├── src/
+│   └── assets/
+│
+├── week-11/                    # Responsible AI
+│   ├── README.md
+│   ├── src/
+│   └── assets/
+│
+└── week-12/                    # Capstone Showcase / Final Wrap-Up
+    ├── README.md
+    ├── src/
+    └── assets/
 
-- safe disposal methods, and
 
-- wealth-creation ideas from that very waste.
 
-This project is my small step toward co-existing harmoniously with nature and protecting our planet from further harm. <br>
+## Skills You’ll Gain
 
-I invite you to join me in this journey — fork and clone this repo, and let’s build a system that not only manages waste but also restores balance with our mother earth.
+* Generative AI Fundamentals
+* Sequence Models & Transformers
+* GPT Architectures (1–5)
+* Open-Source & Proprietary Models (LLaMA, Claude, Mistral, etc.)
+* Agentic AI & Tool-Augmented LLMs
+* Multimodal AI Systems (text, vision, speech)
+* Fine-Tuning & Domain Adaptation (LoRA, adapters)
+* Jac Programming & the Jaseci Platform
+* Responsible & Ethical AI Practices
+
+---
+
+## 📂 Weekly Roadmap
+
+| Week | Topic                                  | Folder Link          | Highlights                                               |
+| ---- | -------------------------------------- | -------------------- | -------------------------------------------------------- |
+| 1    | Course Launch & The Generative AI Wave | [Week-01](./week-01) | State of GenAI, research & industry trends               |
+| 2    | Foundations of AI, ML & Deep Learning  | [Week-02](./week-02) | Core definitions, neural networks, cognition comparisons |
+| 3    | Sequence Models & Transformers         | [Week-03](./week-03) | RNNs, LSTMs, GRUs, attention, Transformer intro          |
+| 4    | GPT Architectures (GPT-1 → GPT-5)      | [Week-04](./week-04) | Model evolution, fine-tuning, RLHF                       |
+| 5    | Advanced Open Models                   | [Week-05](./week-05) | DeepSeek-V2, LLaMA, Phi, Claude, Mistral                 |
+| 6    | Agentic AI Systems                     | [Week-06](./week-06) | Agents, orchestration, tool-augmented LLMs               |
+| 7    | Multimodal AI                          | [Week-07](./week-07) | GPT-4V, MM-ReAct, Gemma 3, multimodal tasks              |
+| 8    | Fine-Tuning & Domain Adaptation        | [Week-08](./week-08) | LoRA, adapters, custom datasets                          |
+| 9    | Hackathon – Part 1                     | [Week-09](./week-09) | Collaborative projects, real-world challenges            |
+| 10   | Hackathon – Part 2                     | [Week-10](./week-10) | Solution building & deployment                           |
+| 11   | Responsible & Ethical AI               | [Week-11](./week-11) | Bias, safety, ethics, governance                         |
+| 12   | Capstone & Showcase                    | [Week-12](./week-12) | Final presentations, wrap-up                             |
+
+---
+
+## 🚀 Getting Started
+
+1. Clone this repository:
+
+   ```bash
+   git clone https://github.com/your-org/generative-ai-seminar.git
+   cd generative-ai-seminar
+   ```
+2. Install dependencies:
+
+   ```bash
+   uv sync
+   ```
+3. Navigate to the week you want to start (e.g., `cd week-01`).
+
+---
+
+## 📚 Resources
+
+* [Jac Programming Language](https://jac-lang.org/)
+* [Jaseci Platform](https://jaseci.org/)
+* [Transformer Paper (Vaswani et al., 2017)](https://arxiv.org/abs/1706.03762)
+* [OUK – Open University of Kenya](https://ouk.ac.ke/)
+* [BCS Technology](https://bcstechnology.com.au/)
+
+---
+
+## 🏆 Final Hackathon
+
+In **Weeks 9–10**, learners participate in a collaborative **Generative AI Hackathon**, solving real-world problems across healthcare, agriculture, finance, education, and transportation.
+
