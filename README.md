@@ -6,7 +6,8 @@ This program blends **cutting-edge AI theory** with **hands-on practice**, equip
 
 ## 📂 Repository Structure
 
-generative-ai-seminar/
+```
+generative_ai_ouk/
 │
 ├── README.md                  # Main homepage (course overview + navigation)
 ├── LICENSE                    # License file (recommended)
@@ -79,7 +80,7 @@ generative-ai-seminar/
     ├── README.md
     ├── src/
     └── assets/
-
+```
 
 
 ## Skills You’ll Gain
@@ -121,8 +122,8 @@ generative-ai-seminar/
 1. Clone this repository:
 
    ```bash
-   git clone https://github.com/your-org/generative-ai-seminar.git
-   cd generative-ai-seminar
+   git clone https://github.com/Developer-Linus/generative_ai_ouk.git
+   cd generative_ai_ouk
    ```
 2. Install dependencies:
 
