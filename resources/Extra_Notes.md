@@ -500,5 +500,162 @@ Jac lets you **model the farm as a living map**:
 * Nodes = Farm elements (farmer, crops, soil, animals, market).
 * Edges = Relationships (owns, grows_in, sells_to).
 * Walkers = Inspectors/agents that move around and report.
+---
+
+# 📘 Understanding Jaseci’s Building Blocks
+
+Jaseci (and Jac language) uses **graphs** to organize and run your application.
+It does this with **three main components**:
+
+1. **Nodes → “Things” (data containers)**
+2. **Edges → “Connections” (relationships)**
+3. **Walkers → “Actions” (behaviors, processes)**
+
+And it organizes them in **three files**:
+
+* **What exists** (nodes + edges + walker definitions).
+* **How things work** (implementations of behavior).
+* **Tests** (checking correctness).
 
 ---
+
+## 🟢 1. Nodes (Things that exist)
+
+* Think of a **node** as an *object* in the real world.
+* Nodes **store information** (attributes).
+
+### Example in life
+
+* A **Person** node might store:
+
+  * name, age, ID number.
+* A **Book** node might store:
+
+  * title, author, year published.
+
+```jac
+node User {
+    has username: str;
+}
+```
+
+This means: *We now have a type of object called `User`. Every User has a username (string).*
+
+📌 Analogy:
+Imagine a **box labeled “User”**. Inside the box, you always find a paper called *username*.
+
+---
+
+## 🟠 2. Edges (Connections between things)
+
+* An **edge** shows a relationship between two nodes.
+* Edges don’t always have to carry information, but they can (like cost, date, etc.).
+
+### Example in life
+
+* **Friendship** connects two people.
+* **Borrowed** connects a person to a book.
+* **Road** connects two towns.
+
+```jac
+edge Follow {}
+```
+
+This means: *We now have a relationship type called `Follow` that can connect one node to another.*
+
+📌 Analogy:
+If nodes are **houses**, edges are the **roads** that connect them. Without roads, houses stand alone.
+
+---
+
+## 🔵 3. Walkers (Actions / Processes)
+
+* A **walker** is like a **traveler or agent** that moves through the graph (nodes + edges) and *does something*.
+* Walkers can:
+
+  * Look at information.
+  * Create new nodes or edges.
+  * Change data.
+  * Report results.
+
+```jac
+walker create_tweet(visit_profile) {
+    has content: str;
+    can tweet with Profile entry;
+}
+```
+
+This means: *There’s a process called `create_tweet`. It can visit a profile, then create a tweet node and attach it.*
+
+📌 Analogy:
+If nodes are **rooms** and edges are **doors**, walkers are **people walking through rooms, reading notes, writing new ones, or rearranging furniture**.
+
+---
+
+# File Structure (3 parts working together)
+
+Jaseci organizes code into **three files** automatically:
+
+1. **Definition file (`.jac`) → What exists**
+
+   * Declares nodes, edges, walkers.
+   * Think of it like a **map legend**: what symbols are on the map.
+
+   ```jac
+   node Person { has name: str; }
+   edge ParentOf {}
+   walker family_view {}
+   ```
+
+---
+
+2. **Implementation file (`.impl.jac`) → How it works**
+
+   * Defines the **actual behavior** of walkers, and how nodes change.
+   * Think of it like **instructions** for how travelers should act.
+
+   ```jac
+   impl Person.update {
+       self.name = here.new_name;
+       report self;
+   }
+   ```
+
+---
+
+3. **Test file (`.test.jac`) → Proof it works**
+
+   * Contains checks to make sure everything behaves as expected.
+   * Think of it like **exam questions** for your graph.
+
+   ```jac
+   test create_person {
+       root spawn create_person(name="Alice");
+       person = [root --> (?Person)][0];
+       check person.name == "Alice";
+   }
+   ```
+
+---
+
+# Summary in Plain Words
+
+* **Nodes** = Objects (things in your system).
+* **Edges** = Relationships between objects.
+* **Walkers** = Actions that move through objects and make changes.
+* **Three Files** =
+
+  * **What exists** (blueprint).
+  * **How it works** (instructions).
+  * **Tests** (proof).
+
+---
+
+👉 Once you understand this, coding in Jac feels like **telling a story**:
+
+* “There are people.” (nodes)
+* “They can follow each other.” (edges)
+* “Someone can visit a profile, update info, or post.” (walkers)
+
+---
+
