@@ -115,10 +115,7 @@ Enter a waste type (or 'quit' to exit): quit
 
 ## Screenshots / Demo
 
-```
-![alt text](image.png)
-```
-
+![App screenshot](app-screenshot.png)
 ---
 
 If you have ideas for improving analysis quality or want to support more model backends, feel free to open an issue or a PR. Together we can make waste handling safer and smarter.
@@ -177,7 +174,7 @@ pipx install uv
 pipx ensurepath
 ```
 
-  - Alternatively, see uv’s official install docs for your platform.
+- Alternatively, see uv’s official install docs for your platform.
 
 - jac: command not found
   - Activate your venv (`source .venv/bin/activate`) and install:
@@ -187,7 +184,7 @@ uv pip install jaclang
 jac --version
 ```
 
-  - Or verify using uvx without a venv:
+- Or verify using uvx without a venv:
 
 ```
 uvx --from jaclang jac --version
