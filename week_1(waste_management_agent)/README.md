@@ -227,3 +227,25 @@ fix: correct harmfulness label for e-waste
 ```
 
 6) Open a Pull Request describing motivation, changes, and testing notes. For larger changes, consider opening an issue first to discuss direction.
+
+## Testing
+
+This project includes deterministic Jac tests that do not require live LLM calls. Tests seed `waste_node` data and exercise the `WasteAgent` walker to validate cache behavior and safety guardrails.
+
+What the tests cover
+- process_existing_waste_node: `process_waste` runs on existing nodes and does not mutate fields.
+- cache_hit_no_duplicates: cached entries are reused; no duplicate nodes are created.
+- repeated_queries_do_not_duplicate: repeated runs for the same waste keep a single node.
+- guardrails_not_applied_on_existing_cache: existing cached entries are not rewritten by guardrails.
+
+Run tests (venv)
+
+```
+jac test src/waste_management.test.jac
+```
+
+Run tests (uvx, without venv)
+
+```
+uvx --from jaclang jac test src/waste_management.test.jac
+```
