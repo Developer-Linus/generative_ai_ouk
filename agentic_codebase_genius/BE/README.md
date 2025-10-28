@@ -18,12 +18,8 @@ For the first time, her code spoke for itself.
 Codebase Genius had turned her long hours of silence and struggle into something that anyone could understand.
 
 ---
+
 # System Requirements
-Excellent 👍 Here’s the **next section** that follows naturally after your backstory — the **Functional and Non-Functional Requirements** for **Codebase Genius**.
-
----
-
-## **System Requirements**
 
 ### **1. Functional Requirements**
 
@@ -133,7 +129,6 @@ These describe the **qualities** of the system rather than its features.
 * If credentials are ever required (for private repos in the future), they must be securely handled through environment variables.
 
 ---
-
 
 Perfect — let’s now write a **clear and professional “System Architecture and Design” section** for your project report.
 It will align **exactly** with your assignment (Sections 4.1 & 4.2) and fit your **multi-agent documentation generator for code repositories** (optimized for Python and Jac, generalizable to others).
@@ -378,6 +373,5 @@ pip install -r requirements.txt
 ```bash
 python main.py
 ```
-
 
 ---
