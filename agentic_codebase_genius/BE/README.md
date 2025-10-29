@@ -1,4 +1,4 @@
-# A Developer's Story
+# 1. A Developer's Story
 
 Maya leaned back in her chair, staring at the bright laptop screen. The room was quiet except for the soft hum of her computer. A cup of cold coffee sat beside her, untouched for hours.
 
@@ -19,25 +19,25 @@ Codebase Genius had turned her long hours of silence and struggle into something
 
 ---
 
-# System Requirements
+# 2. System Requirements
 
-### **1. Functional Requirements**
+### **2.1. Functional Requirements**
 
 These describe what **Codebase Genius** must do — its features and core functions.
 
-#### **1.1 Input and Initialization**
+#### **2.1.1. Input and Initialization**
 
 * The system must accept a **public GitHub repository URL** from the user.
 * It must **validate** that the URL is reachable and that the repository can be cloned.
 * If the repository is private or invalid, the system must return a clear error message.
 
-#### **1.2 Repository Mapping**
+#### **2.1.2 Repository Mapping**
 
 * The system must clone the repository to a temporary folder.
 * It must build a **file-tree structure**, ignoring unnecessary directories such as `.git`, `__pycache__`, or `node_modules`.
 * It must locate and summarize the `README.md` or similar entry file to help guide later analysis.
 
-#### **1.3 Code Analysis**
+#### **2.1.3 Code Analysis**
 
 * The system must identify the **programming language(s)** used in the repository, prioritizing **Python** and **Jac**.
 * It must use a parser (e.g., **Tree-sitter**) to analyze source files and extract:
@@ -47,7 +47,7 @@ These describe what **Codebase Genius** must do — its features and core functi
 * It must construct a **Code Context Graph (CCG)** to represent these relationships.
 * The CCG must be queryable, allowing other agents to ask questions like “Which functions call `train_model`?”
 
-#### **1.4 Documentation Generation**
+#### **2.1.4 Documentation Generation**
 
 * The system must generate **Markdown documentation** based on the analysis.
 * The documentation must include:
@@ -59,7 +59,7 @@ These describe what **Codebase Genius** must do — its features and core functi
   * **Diagrams** to illustrate structure and dependencies.
 * The generated file must be saved locally (e.g., `./outputs/<repo_name>/docs.md`).
 
-#### **1.5 Multi-Agent Collaboration**
+#### **2.1.5 Multi-Agent Collaboration**
 
 * The system must include at least these agents:
 
@@ -69,7 +69,7 @@ These describe what **Codebase Genius** must do — its features and core functi
   * **DocGenie:** Generates the final Markdown documentation.
 * Agents must communicate through shared state or message passing.
 
-#### **1.6 API Exposure**
+#### **2.1.6 API Exposure**
 
 * The system must provide an **HTTP API** that:
 
@@ -77,7 +77,7 @@ These describe what **Codebase Genius** must do — its features and core functi
   * Triggers the analysis and documentation generation process.
   * Returns the generated documentation or a download link.
 
-#### **1.7 Error Handling**
+#### **2.1.7 Error Handling**
 
 * The system must gracefully handle errors such as:
 
@@ -88,41 +88,41 @@ These describe what **Codebase Genius** must do — its features and core functi
 
 ---
 
-### **2. Non-Functional Requirements**
+### **2.2. Non-Functional Requirements**
 
 These describe the **qualities** of the system rather than its features.
 
-#### **2.1 Performance**
+#### **2.2.1 Performance**
 
 * The system should analyze and document medium-sized repositories (up to 200 files) in **under 3 minutes** on average.
 * It should prioritize **high-impact files first** (like `main.py` or `app.jac`) to produce early results quickly.
 
-#### **2.2 Scalability**
+#### **2.2.2 Scalability**
 
 * The architecture must support adding new agents easily (for example, a Diagram Generator or Code Reviewer).
 * The analysis pipeline should handle multiple requests concurrently.
 
-#### **2.3 Maintainability**
+#### **2.2.3 Maintainability**
 
 * The system should use a **modular agent-based design**, where each agent can be updated or replaced independently.
 * Code should follow clear documentation and naming standards.
 
-#### **2.4 Reliability**
+#### **2.2.4 Reliability**
 
 * All agents should include fallback logic to continue processing if another agent fails.
 * Temporary repositories must be cleaned up after use to prevent clutter or storage issues.
 
-#### **2.5 Usability**
+#### **2.2.5 Usability**
 
 * The API interface must be simple: a single endpoint to submit a repository URL.
 * The output documentation must be easy to read, clearly structured, and suitable for direct publishing on GitHub.
 
-#### **2.6 Extensibility**
+#### **2.2.6 Extensibility**
 
 * The system should support other programming languages in the future (e.g., JavaScript, Go, Java) by adding new parsers.
 * The documentation generator must be flexible enough to integrate diagrams, graphs, and other visualization tools.
 
-#### **2.7 Security**
+#### **2.2.7 Security**
 
 * The system must sanitize all input URLs to prevent malicious injections.
 * It must not store or leak user repository data beyond what is needed for processing.
@@ -130,22 +130,17 @@ These describe the **qualities** of the system rather than its features.
 
 ---
 
-Perfect — let’s now write a **clear and professional “System Architecture and Design” section** for your project report.
-It will align **exactly** with your assignment (Sections 4.1 & 4.2) and fit your **multi-agent documentation generator for code repositories** (optimized for Python and Jac, generalizable to others).
+## **3. System Architecture and Design**
 
----
+### **3.1 System Overview**
 
-## **4. System Architecture and Design**
-
-### **4.1 System Overview**
-
-Developers often struggle to create accurate and complete README files. Manual documentation is time-consuming, prone to human error, and usually outdated as code evolves.
+Developers often struggle to create accurate and complete README files. Manual documentation is `time-consuming`, `prone to human error`, and usually `outdated as code evolves`.
 This system provides an **automated documentation generator** that uses a **multi-agent architecture** to analyze a code repository and produce clean, structured Markdown documentation.
 The agents collaborate under a **supervising AI agent (Code Genius)** that coordinates specialized agents for repository mapping, code analysis, and documentation generation.
 
 ---
 
-### **4.2 Architectural Goals**
+### **3.2 Architectural Goals**
 
 * **Automation:** Minimize manual documentation work.
 * **Accuracy:** Generate up-to-date technical details directly from code.
@@ -155,11 +150,11 @@ The agents collaborate under a **supervising AI agent (Code Genius)** that coord
 
 ---
 
-### **4.3 System Architecture**
+### **3.3 System Architecture**
 
-#### **4.3.1 High-Level Architecture**
+#### **3.3.1 High-Level Architecture**
 
-The architecture follows a **multi-agent pipeline** model inspired by *byLLM*.
+The architecture follows a **multi-agent pipeline** model.
 Each agent performs a specific stage of the workflow and communicates via shared state and message passing in Jac.
 
 ```text
@@ -188,9 +183,9 @@ Each agent performs a specific stage of the workflow and communicates via shared
 
 ---
 
-### **4.4 Agent Descriptions**
+### **3.4 Agent Descriptions**
 
-#### **1. Code Genius (Supervisor)**
+#### **3.4.1. Code Genius (Supervisor)**
 
 * **Role:** Central controller that orchestrates the workflow.
 * **Responsibilities:**
@@ -206,7 +201,7 @@ Each agent performs a specific stage of the workflow and communicates via shared
 
 ---
 
-#### **2. Repo Mapper**
+#### **3.4.2. Repo Mapper**
 
 * **Role:** Creates a structural and semantic map of the repository.
 * **Responsibilities:**
@@ -223,7 +218,7 @@ Each agent performs a specific stage of the workflow and communicates via shared
 
 ---
 
-#### **3. Code Analyzer**
+#### **3.4.3. Code Analyzer**
 
 * **Role:** Performs in-depth static and semantic code analysis.
 * **Responsibilities:**
@@ -246,7 +241,7 @@ Each agent performs a specific stage of the workflow and communicates via shared
 
 ---
 
-#### **4. DocGenie**
+#### **3.4.4. DocGenie**
 
 * **Role:** Synthesizes final human-readable documentation from structured data.
 * **Responsibilities:**
@@ -264,16 +259,16 @@ Each agent performs a specific stage of the workflow and communicates via shared
 
 ---
 
-### **4.5 Data Flow and Inter-Agent Communication**
+### **3.5 Data Flow and Inter-Agent Communication**
 
-1. **Input Stage**
+3.5.1. **Input Stage**
 
-   * User submits a GitHub URL through a web or CLI interface.
-   * `Code Genius` validates the URL and creates a job ID.
+* User submits a GitHub URL through a web or CLI interface.
+* `Code Genius` validates the URL and creates a job ID.
 
-2. **Repository Mapping**
+3.5.2. **Repository Mapping**
 
-   * `Repo Mapper` clones the repository and returns a structured `repo_map` object:
+* `Repo Mapper` clones the repository and returns a structured `repo_map` object:
 
      ```json
      {
@@ -285,14 +280,14 @@ Each agent performs a specific stage of the workflow and communicates via shared
      }
      ```
 
-3. **Planning**
+3.5.3. **Planning**
 
-   * `Code Genius` analyzes the file tree and README summary.
-   * It identifies high-impact modules to analyze first.
+* `Code Genius` analyzes the file tree and README summary.
+* It identifies high-impact modules to analyze first.
 
-4. **Code Analysis**
+3.5.4. **Code Analysis**
 
-   * `Code Analyzer` parses source files and builds a `CCG`:
+* `Code Analyzer` parses source files and builds a `CCG`:
 
      ```json
      {
@@ -303,14 +298,14 @@ Each agent performs a specific stage of the workflow and communicates via shared
      }
      ```
 
-5. **Documentation Generation**
+3.5.5. **Documentation Generation**
 
-   * `DocGenie` converts structured outputs into a clean Markdown file and diagrams.
-   * Supervisor saves the result and returns a downloadable link.
+* `DocGenie` converts structured outputs into a clean Markdown file and diagrams.
+* Supervisor saves the result and returns a downloadable link.
 
 ---
 
-### **4.6 Technology Stack**
+### **3.6 Technology Stack**
 
 | Layer           | Technology         | Purpose                                               |
 | --------------- | ------------------ | ----------------------------------------------------- |
@@ -324,7 +319,7 @@ Each agent performs a specific stage of the workflow and communicates via shared
 
 ---
 
-### **4.7 Non-Functional Requirements**
+### **3.7 Non-Functional Requirements**
 
 | Category            | Requirement                                                               |
 | ------------------- | ------------------------------------------------------------------------- |
@@ -338,40 +333,11 @@ Each agent performs a specific stage of the workflow and communicates via shared
 
 ---
 
-### **4.8 Design Patterns Used**
+### **3.8 Design Patterns Used**
 
 * **Multi-Agent Collaboration Pattern:** Agents act as semi-autonomous specialists under one supervisor.
 * **Pipeline Pattern:** Sequential processing from mapping → analysis → generation.
 * **Message Passing / Shared State:** Agents communicate through Jac’s graph memory and direct calls.
 * **Modular Abstraction:** Each agent can be tested or extended independently.
-
----
-
-### **4.9 Output Example**
-
-Final output stored at:
-
-```
-./outputs/sample_repo/docs.md
-```
-
-**Sample snippet:**
-
-````markdown
-# Sample Project
-
-## Overview
-A Flask-based web application for managing users and authentication.
-
-## Installation
-```bash
-pip install -r requirements.txt
-````
-
-## Usage
-
-```bash
-python main.py
-```
 
 ---
