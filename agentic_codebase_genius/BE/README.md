@@ -83,7 +83,6 @@ These describe what **Codebase Genius** must do — its features and core functi
 
   * Invalid repository URL.
   * Network or parsing failures.
-  * Unsupported programming languages.
 * It must return clear and human-friendly error messages.
 
 ---
@@ -313,7 +312,7 @@ Each agent performs a specific stage of the workflow and communicates via shared
 | Backend Runtime | Python             | Parsing, repository operations                        |
 | Parser          | Tree-sitter, `ast` | Language-agnostic syntax parsing                      |
 | LLM Integration | byLLM / OpenAI     | Summarization and explanation                         |
-| Visualization   | Graphviz / Mermaid | Graph diagrams for documentation                      |
+| Visualization   | Mermaid | Graph diagrams for documentation                      |
 | API Layer       | Jac HTTP server    | Serve endpoints (`/generate`, `/status`, `/download`) |
 | Storage         | Local filesystem   | Temporary cloned repos and generated docs             |
 
