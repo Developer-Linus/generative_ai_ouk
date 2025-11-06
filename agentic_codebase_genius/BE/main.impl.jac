@@ -7,81 +7,126 @@ import os;
 import shutil;
 import subprocess;
 import from byllm.llm { Model }
+import networkx as nx;
+import tree_sitter;
+import from tree_sitter {Language, Parser}
 include agentic_core;
 include utils;
 
-# Initialize the global LLM (using gpt-4o as base model)
+# Initialize global LLM model
 glob llm = Model(model_name="gpt-4o", verbose=False);
 
-# ------------------------------------------------------
-# RepoMapper Node Implementation
-# ------------------------------------------------------
+# =====================================================
+# RepoMapper Node: Handles cloning and repository mapping
+# =====================================================
 node RepoMapper {
-    has temp_dir: str = "./temp_repos";  # where repos are cloned locally
+    has temp_dir: str = "./temp_repos";
 
-    # clone_repo: clones a GitHub repo into ./temp_repos/<repo_name>
     def clone_repo(repo_url: str, dest_dir: str = self.temp_dir) -> str {
-        # Extract repo name from URL (last part after '/')
         repo_name = repo_url.split("/")[-1];
-        if repo_name.endswith(".git") {
+        if repo_name.endswith(".git"):
             repo_name = repo_name[:-4];
-        }
 
-        # Full local path
         local_path = dest_dir + "/" + repo_name;
 
-        # Ensure the temp_repos directory exists
-        if not os.path.exists(dest_dir) {
+        if not os.path.exists(dest_dir):
             os.makedirs(dest_dir);
-        }
 
-        # If folder already exists, remove it to avoid conflicts
         if os.path.exists(local_path):
             shutil.rmtree(local_path);
 
-        # Clone the repo using git
         result = subprocess.run(["git", "clone", repo_url, local_path],
                                 capture_output=True, text=True);
 
         if result.returncode != 0:
             return f"Error cloning repo: {result.stderr}";
 
-        # Return the local path for later use
         return local_path;
     }
 
-    # map_repository: builds a clean file tree (no noise)
     def map_repository(local_path: str) -> dict {
         repo_map = {};
-
         for root, dirs, files in os.walk(local_path):
-            # Remove excluded folders in-place
             dirs[:] = [d for d in dirs if not should_exclude(d)];
             files = [f for f in files if not should_exclude(f)];
-
-            # Build relative path structure
             rel_path = os.path.relpath(root, local_path);
             repo_map[rel_path] = files;
-
         return repo_map;
     }
 
-    # summarize_readme: finds README and summarizes it using llm
     def summarize_readme(readme_text: str) -> str by llm();
 
-    # route_and_run: decides what to do based on utterance
     def route_and_run(utterance: str, history: str) -> str by llm(
         method="ReAct",
         tools=([self.clone_repo, self.map_repository, self.summarize_readme])
     );
 }
 
-
-# ------------------------------------------------------
-# CodeAnalyzer Node Implementation
-# ------------------------------------------------------
+# =====================================================
+# CodeAnalyzer Node: Parses and builds code relationships
+# =====================================================
 node CodeAnalyzer {
-    # detect_languages: guesses programming languages based on file extensions
+    has language_lib: str = "./build/languages.so";
+
+    # Build and initialize parser (one-time)
+    def setup_parser() -> Parser {
+        if not os.path.exists(self.language_lib):
+            # Dynamically build tree-sitter language library (supports Python, JS, etc.)
+            Language.build_library(
+                self.language_lib,
+                [
+                    "tree-sitter-python",
+                    "tree-sitter-javascript",
+                    "tree-sitter-java",
+                    "tree-sitter-typescript",
+                ]
+            );
+        lang = Language(self.language_lib, "python");
+        parser = Parser();
+        parser.set_language(lang);
+        return parser;
+    }
+
+    # Extract structure using tree-sitter
+    def parse_python_file(file_path: str) -> dict {
+        parser = self.setup_parser();
+        with open(file_path, "r", encoding="utf-8") as f:
+            code = f.read();
+
+        tree = parser.parse(bytes(code, "utf8"));
+        root_node = tree.root_node;
+
+        # Walk tree to extract functions/classes
+        structure = [];
+        cursor = root_node.walk();
+
+        def walk(node):
+            if node.type in ["function_definition", "class_definition"]:
+                structure.append({
+                    "type": node.type,
+                    "name": code[node.start_byte:node.child_by_field_name("name").end_byte]
+                            if node.child_by_field_name("name") else "unknown",
+                    "start_line": node.start_point[0] + 1,
+                    "end_line": node.end_point[0] + 1
+                });
+            for i in range(len(node.children)):
+                walk(node.children[i]);
+
+        walk(root_node);
+        return structure;
+    }
+
+    # Build a relationship graph using NetworkX
+    def build_relationship_graph(parsed_data: dict) -> nx.Graph {
+        G = nx.DiGraph();
+        for item in parsed_data:
+            G.add_node(item["name"], type=item["type"]);
+        # Example: simplistic relationships
+        for i in range(len(parsed_data) - 1):
+            G.add_edge(parsed_data[i]["name"], parsed_data[i + 1]["name"]);
+        return G;
+    }
+
     def detect_languages(files: dict) -> list[str] {
         extensions = set();
         lang_map = {
@@ -94,63 +139,52 @@ node CodeAnalyzer {
             ".html": "HTML",
             ".css": "CSS",
         };
-
         for folder, flist in files.items():
             for fname in flist:
                 for ext, lang in lang_map.items():
                     if fname.endswith(ext):
                         extensions.add(lang);
-
         return list(extensions);
     }
 
-    # analyze_files: placeholder for deeper static analysis
-    def analyze_files(files: dict) -> dict {
-        # In future, this can include parsing ASTs, class/function extraction, etc.
-        return {
-            "summary": "Basic code structure extracted.",
-            "language_stats": self.detect_languages(files)
-        };
-    }
-
-    # query_ccg: simulates a graph query (placeholder)
-    def query_ccg(query: str) -> dict {
-        return {
-            "query": query,
-            "result": "Graph query simulated successfully."
-        };
+    def analyze_files(repo_map: dict) -> dict {
+        analysis = {};
+        for folder, flist in repo_map.items():
+            for fname in flist:
+                if fname.endswith(".py"):
+                    fpath = os.path.join(folder, fname);
+                    parsed = self.parse_python_file(fpath);
+                    G = self.build_relationship_graph(parsed);
+                    analysis[fpath] = {
+                        "entities": parsed,
+                        "relations": list(G.edges())
+                    };
+        return analysis;
     }
 
     def route_and_run(utterance: str, history: str) -> str by llm(
         method="ReAct",
-        tools=([self.detect_languages, self.analyze_files, self.query_ccg])
+        tools=([self.detect_languages, self.analyze_files, self.build_relationship_graph])
     );
 }
 
-
-# ------------------------------------------------------
-# DocGenie Node Implementation
-# ------------------------------------------------------
+# =====================================================
+# DocGenie Node: Generates structured README.md files
+# =====================================================
 node DocGenie {
     has docs_path: str = "./docs/readme.md";
 
-    # draft_readme: creates a complete README.md using artifacts and llm
     def draft_readme(spec: dict, artifacts: dict) -> str by llm();
-
-    # draft_section: creates one markdown section
     def draft_section(title: str, content: str) -> str by llm();
 
-    # Helper: Save generated README to docs/readme.md
     def save_readme(content: str) {
         docs_dir = os.path.dirname(self.docs_path);
         if not os.path.exists(docs_dir):
             os.makedirs(docs_dir);
-
         with open(self.docs_path, "w") as f:
             f.write(content);
     }
 
-    # route_and_run: orchestrates doc generation and saving
     def route_and_run(utterance: str, history: str) -> str by llm(
         method="ReAct",
         tools=([self.draft_readme, self.draft_section, self.save_readme])
